@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   Icon(
-                    Icons.search,
+                    Icons.poll_outlined,
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   Icon(
