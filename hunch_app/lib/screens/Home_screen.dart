@@ -11,6 +11,7 @@ import 'package:hunch_app/chat/chat_page.dart';
 import 'package:hunch_app/users.dart/userPage.dart';
 import 'package:hunch_app/users.dart/user_service.dart';
 import 'package:provider/provider.dart';
+import 'package:hunch_app/screens/notification.dart';
 
 // Define the MenuAction enum here
 enum MenuAction {
@@ -36,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.amber,
     ),
     AddPostScreen(),
-
     Chatpage(),
     UserPage()
   ];
@@ -85,6 +85,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ];
                   },
                 ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Notif()));
+                    },
+                    icon: Icon(Icons.notifications)),
               ],
               title: RichText(
                   text: TextSpan(

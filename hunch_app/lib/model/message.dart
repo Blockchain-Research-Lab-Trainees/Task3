@@ -12,7 +12,10 @@ class Message {
     required this.senderEmail,
     required this.receiverId,
     required this.message,
-    required this.timestamp, required String date, required String imgUrl, required String image,
+    required this.timestamp,
+    String? date,
+    String? imgUrl,
+    String? image,
   });
 
   // Convert to map
@@ -25,5 +28,15 @@ class Message {
       'message': message,
       'timestamp': timestamp,
     };
+  }
+
+  factory Message.fromMap(Map<String, dynamic> map) {
+    return Message(
+      senderId: map['senderId'],
+      senderEmail: map['senderEmail'],
+      receiverId: map['receiverId'],
+      message: map['message'],
+      timestamp: map['timestamp'],
+    );
   }
 }
