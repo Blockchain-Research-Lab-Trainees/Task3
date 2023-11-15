@@ -1,10 +1,12 @@
+//Gaurav Singh
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:hunch_app/model/message.dart';
 import 'dart:ui';
 
-class ChatService extends ChangeNotifier {  //notify listner when state change
+class ChatService extends ChangeNotifier {
+  //notify listner when state change
   final _auth = FirebaseAuth.instance;
   final _store = FirebaseFirestore.instance;
 

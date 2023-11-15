@@ -1,3 +1,4 @@
+//Gaurav Singh
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -9,14 +10,11 @@ import 'package:intl/intl.dart';
 
 class Chatscreen extends StatefulWidget {
   const Chatscreen(
-      {
-        super.key,
+      {super.key,
       required this.Remail,
       required this.Rid,
       required this.imgUrl,
-      this.senderUrl
-      }
-      );
+      this.senderUrl});
   final Remail;
   final imgUrl;
   final Rid;
@@ -37,17 +35,17 @@ class _ChatscreenState extends State<Chatscreen> {
       if (url != null) {
         setState(() {
           senderUrl = url;
-        }
-        );
+        });
       } else {
-        // Handle the case when the sender's image URL is null 
+        // Handle the case when the sender's image URL is null
       }
-    }
-    );
+    });
   }
 
-  Future<String?> getImageUrlForUser() async {                       // we use future bcoz it allow us to work with asynchronous
-    final em = FirebaseAuth.instance.currentUser!.email.toString();   //retrieve email of currenty user use
+  Future<String?> getImageUrlForUser() async {
+    // we use future bcoz it allow us to work with asynchronous
+    final em = FirebaseAuth.instance.currentUser!.email
+        .toString(); //retrieve email of currenty user use
 
     final userSnapshot = await FirebaseFirestore.instance
         .collection('user')
@@ -79,8 +77,8 @@ class _ChatscreenState extends State<Chatscreen> {
   String formatTimestamp(Timestamp timestamp) {
     DateTime dateTime = timestamp.toDate();
     // Format dateTime as needed, e.g., using DateFormat from intl package
-    return DateFormat.Hm().format(dateTime); 
-     // Example format: 12:34 PM
+    return DateFormat.Hm().format(dateTime);
+    // Example format: 12:34 PM
   }
 
   @override
@@ -103,7 +101,7 @@ class _ChatscreenState extends State<Chatscreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(8),
                     child: Text(
-                      widget.Remail.toString().split('@')[0],  //user name
+                      widget.Remail.toString().split('@')[0], //user name
                       style: GoogleFonts.ubuntu(
                           fontSize: 23, fontWeight: FontWeight.bold),
                     ),
@@ -124,7 +122,8 @@ class _ChatscreenState extends State<Chatscreen> {
     );
   }
 
-  Widget builderMessage() {                 //display message  in chat like format and create ui
+  Widget builderMessage() {
+    //display message  in chat like format and create ui
     return StreamBuilder(
       stream: chatService.getMessages(widget.Rid, auth.currentUser!.uid),
       builder: (context, snapshot) {
@@ -141,7 +140,6 @@ class _ChatscreenState extends State<Chatscreen> {
           return Center(
             child: Text('Error loading messages'),
           );
-
         }
         return ListView(
             reverse: true,
@@ -268,7 +266,6 @@ class _ChatscreenState extends State<Chatscreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-
                               // Container(
                               //   alignment: Alignment.centerLeft,
 
@@ -285,7 +282,6 @@ class _ChatscreenState extends State<Chatscreen> {
                               //         color: Colors.grey.shade600),
                               //   ),
                               // ),
-
                             ],
                           ),
                           Row(
@@ -336,15 +332,16 @@ class _ChatscreenState extends State<Chatscreen> {
       child: TextField(
         controller: _messageController,
         decoration: InputDecoration(
-            suffixIconColor: Colors.black,
-            hintText: 'Send Message',
-            focusColor: Colors.black,
-            hoverColor: Colors.black,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(23)),
-            suffixIcon: IconButton(
-                onPressed: () => send(), icon: Icon(Icons.send_rounded),
-                ),
-                ),
+          suffixIconColor: Colors.black,
+          hintText: 'Send Message',
+          focusColor: Colors.black,
+          hoverColor: Colors.black,
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(23)),
+          suffixIcon: IconButton(
+            onPressed: () => send(),
+            icon: Icon(Icons.send_rounded),
+          ),
+        ),
       ),
     );
   }

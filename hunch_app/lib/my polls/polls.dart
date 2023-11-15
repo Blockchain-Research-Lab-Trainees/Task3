@@ -1,8 +1,6 @@
-
+//Gaurav Singh/euclid
 import 'package:flutter/material.dart';
 import 'package:hunch_app/my%20polls/createpoll.dart';
-
-
 
 class MyPoll extends StatelessWidget {
   @override
@@ -11,7 +9,7 @@ class MyPoll extends StatelessWidget {
       appBar: AppBar(
         title: Text('My Polls'),
       ),
-      body: PollList(), 
+      body: PollList(),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 231, 166, 120),
         onPressed: () {

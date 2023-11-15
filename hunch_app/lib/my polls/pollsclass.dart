@@ -1,8 +1,8 @@
+//Gaurav Singh/euclid
 List polls() => [
       {
         'id': 1,
-        'question':
-            'Are you Enjoying flutter so far?',
+        'question': 'Are you Enjoying flutter so far?',
         'end_date': DateTime(2023, 11, 21),
         'options': [
           {
@@ -51,8 +51,7 @@ List polls() => [
       },
       {
         'id': 3,
-        'question':
-            'How not to be a noob?',
+        'question': 'How not to be a noob?',
         'end_date': DateTime(2024, 04, 30),
         'options': [
           {
@@ -68,9 +67,3 @@ List polls() => [
         ],
       },
     ];
-
-
-
-
-
-    

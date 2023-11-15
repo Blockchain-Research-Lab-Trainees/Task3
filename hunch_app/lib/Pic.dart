@@ -1,4 +1,4 @@
-//Maansi
+//Maansi Garg
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -20,15 +20,18 @@ class ImageUp extends StatefulWidget {
 }
 
 class _ImageUpState extends State<ImageUp> {
-  final ImagePicker _picker=ImagePicker();
+  final ImagePicker _picker = ImagePicker();
   String? imageUrl;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         // if(imageUrl==null)
-          Icon(Icons.image,size: 60,color:Theme.of(context).primaryColor),
-          TextButton(onPressed:()=> _selectPhoto(),child: Text("Upload Pic"),),
+        Icon(Icons.image, size: 60, color: Theme.of(context).primaryColor),
+        TextButton(
+          onPressed: () => _selectPhoto(),
+          child: Text("Upload Pic"),
+        ),
         // if(imageUrl!=null)
         //   InkWell(
         //     splashColor: Colors.transparent,
@@ -39,50 +42,70 @@ class _ImageUpState extends State<ImageUp> {
       ],
     );
   }
-  Future _selectPhoto() async{
-    await showModalBottomSheet(context: context, builder: (context) => BottomSheet(
-      builder: (context)=> Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(leading: Icon(Icons.camera), title: Text("Camera"),onTap: (){
-            Navigator.of(context).pop();
-            _pickImage(ImageSource.camera);
-          },),
-          ListTile(leading: Icon(Icons.filter), title: Text("Pick a file"),onTap: (){
-            Navigator.of(context).pop();
-            _pickImage(ImageSource.gallery);}),
-        ],
+
+  Future _selectPhoto() async {
+    await showModalBottomSheet(
+      context: context,
+      builder: (context) => BottomSheet(
+        builder: (context) => Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ListTile(
+              leading: Icon(Icons.camera),
+              title: Text("Camera"),
+              onTap: () {
+                Navigator.of(context).pop();
+                _pickImage(ImageSource.camera);
+              },
+            ),
+            ListTile(
+                leading: Icon(Icons.filter),
+                title: Text("Pick a file"),
+                onTap: () {
+                  Navigator.of(context).pop();
+                  _pickImage(ImageSource.gallery);
+                }),
+          ],
+        ),
+        onClosing: () {},
       ),
-      onClosing: (){},
-    ),
     );
   }
-  Future _pickImage(ImageSource source) async{
-    final pickedFile=await _picker.pickImage(source: source,imageQuality: 50);
-    if(pickedFile==null){
+
+  Future _pickImage(ImageSource source) async {
+    final pickedFile =
+        await _picker.pickImage(source: source, imageQuality: 50);
+    if (pickedFile == null) {
       return;
     }
-    var file =await ImageCropper().cropImage(sourcePath: pickedFile.path,aspectRatio:CropAspectRatio(ratioX: 1, ratioY: 1) );
-    if(file==null){
+    var file = await ImageCropper().cropImage(
+        sourcePath: pickedFile.path,
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1));
+    if (file == null) {
       return;
     }
-    file = (await compressImage(file.path,35)) as CroppedFile?;
+    file = (await compressImage(file.path, 35)) as CroppedFile?;
     await _uploadFile(file!.path);
   }
-    Future<XFile?> compressImage(String path,int quality) async {
-    final newPath=p.join((await getTemporaryDirectory()).path,'${DateTime.now()}.${p.extension(path)}');
-    final result = await FlutterImageCompress.compressAndGetFile(path,newPath,quality: quality);
-    return result;
-    }
 
-    Future _uploadFile(String path) async{
-      final ref = FirebaseStorage.instance.ref()
-          .child('image').child('${DateTime.now().toIso8601String()+p.basename(path)}');
-      final result=await ref.putFile(File(path));
-      final fileUrl=await result.ref.getDownloadURL();
-      setState(() {
-        imageUrl=fileUrl;
-      });
-      // widget.onFileChanged(fileUrl);
-    }
+  Future<XFile?> compressImage(String path, int quality) async {
+    final newPath = p.join((await getTemporaryDirectory()).path,
+        '${DateTime.now()}.${p.extension(path)}');
+    final result = await FlutterImageCompress.compressAndGetFile(path, newPath,
+        quality: quality);
+    return result;
+  }
+
+  Future _uploadFile(String path) async {
+    final ref = FirebaseStorage.instance
+        .ref()
+        .child('image')
+        .child('${DateTime.now().toIso8601String() + p.basename(path)}');
+    final result = await ref.putFile(File(path));
+    final fileUrl = await result.ref.getDownloadURL();
+    setState(() {
+      imageUrl = fileUrl;
+    });
+    // widget.onFileChanged(fileUrl);
+  }
 }
