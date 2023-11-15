@@ -7,6 +7,10 @@ class MyPoll extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        backgroundColor: const Color.fromARGB(255, 231, 166, 120),
+        elevation: 8,
+        shadowColor: Colors.black,
         title: Text('My Polls'),
       ),
       body: PollList(),
