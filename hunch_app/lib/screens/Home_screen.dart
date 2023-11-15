@@ -130,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     leading: Icon(Icons.person),
                     title: Text("Account"),
                     subtitle: Text("Personal"),
-                    trailing: Icon(Icons.share),
+                    trailing: Icon(Icons.poll_outlined),
                   ),
                   ListTile(
                     leading: Icon(Icons.person),
