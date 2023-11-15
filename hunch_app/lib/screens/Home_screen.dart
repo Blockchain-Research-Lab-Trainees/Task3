@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hunch_app/blog/add_post.dart';
 import 'package:hunch_app/blog/new_blog.dart';
 import 'package:hunch_app/chat/Chatpage.dart';
+import 'package:hunch_app/my%20polls/polls.dart';
 import 'package:hunch_app/screens/LoginPage.dart';
 import 'package:hunch_app/auth/auth_service.dart';
 import 'package:hunch_app/chat/chat_page.dart';
@@ -32,9 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
     Container(
       child: const CircularProgressIndicator(),
     ),
-    Container(
-      color: Colors.amber,
-    ),
+    MyPoll(),
     AddPostScreen(),
 
     Chatpage(),
