@@ -253,7 +253,10 @@ class _LoginState extends State<Login> {
                             height: 10,
                           ),
                           ElevatedButton.icon(
-                            onPressed: signUserIn,
+                            onPressed:(){
+                              if (_formkey.currentState!.validate())
+                                signUserIn;
+                              },
                             icon: Icon(Icons.arrow_circle_right),
                             label: Text("Login"),
                           ),
