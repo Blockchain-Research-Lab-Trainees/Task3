@@ -219,62 +219,64 @@ class _SignUPState extends State<SignUP> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-          // appBar: AppBar(
-          //   centerTitle: true,
-          //   title: const Text("Signup Page"),
-          // ),
-          body: Container(
-        alignment: Alignment.bottomCenter,
-        constraints: const BoxConstraints.expand(),
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage("assets/images/Untitled.png"),
-              fit: BoxFit.cover),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: SingleChildScrollView(
-              child: Form(
+        // appBar: AppBar(
+        //   centerTitle: true,
+        //   title: const Text("Signup Page"),
+        // ),
+        body: Container(
+          alignment: Alignment.bottomCenter,
+          constraints: const BoxConstraints.expand(),
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/Untitled.png"),
+                fit: BoxFit.cover),
+          ),
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: SingleChildScrollView(
+                child: Form(
                   key: _formkey,
-                  child:Container(
-                child: Column(
-                  children: <Widget>[
-                    // Form(
-                    //     key: _formkey,
-                    //     child:
+                  child: Container(
+                    child: Column(
+                      children: <Widget>[
+                        // Form(
+                        //     key: _formkey,
+                        //     child:
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: <Widget>[
                               TextFormField(
-                                controller: usernameController,
-                                decoration: InputDecoration(
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.deepPurpleAccent),
-                                    borderRadius: BorderRadius.circular(15),
+                                  controller: usernameController,
+                                  decoration: InputDecoration(
+                                    enabledBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderSide: BorderSide(
+                                          color: Colors.deepPurpleAccent),
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                    hintText: 'UserName',
+                                    labelText: " UserName",
+                                    labelStyle: TextStyle(
+                                      color: Colors.black54,
+                                    ),
+                                    fillColor: Colors.grey[200],
+                                    filled: true,
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
-                                    borderRadius: BorderRadius.circular(15),
-                                  ),
-                                  hintText: 'UserName',
-                                  labelText: " UserName",
-                                  labelStyle: TextStyle(
-                                    color: Colors.black54,
-                                  ),
-                                  fillColor: Colors.grey[200],
-                                  filled: true,
-                                ),
-                                  validator:(value){
-                                  if(value==null){
-                                    return "Username can't be empty";
-                                  }if(usernameController.text.trim()==''){
-                                    return"Enter valid Username";
-                                    }return null;
-                                }
-                              ),
+                                  validator: (value) {
+                                    if (value == null) {
+                                      return "Username can't be empty";
+                                    }
+                                    if (usernameController.text.trim() == '') {
+                                      return "Enter valid Username";
+                                    }
+                                    return null;
+                                  }),
                               SizedBox(
                                 height: 15,
                               ),
@@ -397,99 +399,97 @@ class _SignUPState extends State<SignUP> {
                                 height: 8,
                               ),
                             ],
-                          ),),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InkWell(
-                        onTap: () async {
-                          ImagePicker imagePicker = ImagePicker();
-                          XFile? file = await imagePicker.pickImage(
-                              source: ImageSource.gallery);
-                          print('${file?.path}');
-                          if (file == null) return;
-
-                          // String uniqueFileName = DateTime.now().fromMillisecondsSinceEpoch.toString();
-                          String uniqueFileName =
-                              DateTime.now().millisecondsSinceEpoch.toString();
-
-                          Reference referenceRoot =
-                              FirebaseStorage.instance.ref();
-                          Reference referenceDirImages =
-                              referenceRoot.child('images');
-
-                          //create a reference for the image to stored
-                          Reference referenceImageToUpload =
-                              referenceDirImages.child(uniqueFileName);
-
-                          try {
-                            await referenceImageToUpload
-                                .putFile(File(file!.path));
-                            // get down. url
-                            imageUrl =
-                                await referenceImageToUpload.getDownloadURL();
-                          } catch (error) {
-                            //some error occur
-                          }
-
-                          //store file
-                          referenceImageToUpload.putFile(File(file!.path));
-                        },
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 8),
-                          width: 200,
-                          padding: EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
-                          borderRadius: BorderRadius.circular(15),
-                          color: const Color.fromARGB(255, 173, 157, 204),
-                        ),
-
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-
-                              Image.asset(
-                                "assets/images/icons8-camera-64 (1).png",
-                                height: 40,
-                              ),
-                              
-                              Text('Add Image',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),)
-                            ],
                           ),
+                        ),
 
+                        SizedBox(
+                          height: 10,
                         ),
-                        
+                        InkWell(
+                          onTap: () async {
+                            ImagePicker imagePicker = ImagePicker();
+                            XFile? file = await imagePicker.pickImage(
+                                source: ImageSource.gallery);
+                            print('${file?.path}');
+                            if (file == null) return;
+
+                            // String uniqueFileName = DateTime.now().fromMillisecondsSinceEpoch.toString();
+                            String uniqueFileName = DateTime.now()
+                                .millisecondsSinceEpoch
+                                .toString();
+
+                            Reference referenceRoot =
+                                FirebaseStorage.instance.ref();
+                            Reference referenceDirImages =
+                                referenceRoot.child('images');
+
+                            //create a reference for the image to stored
+                            Reference referenceImageToUpload =
+                                referenceDirImages.child(uniqueFileName);
+
+                            try {
+                              await referenceImageToUpload
+                                  .putFile(File(file!.path));
+                              // get down. url
+                              imageUrl =
+                                  await referenceImageToUpload.getDownloadURL();
+                            } catch (error) {
+                              //some error occur
+                            }
+
+                            //store file
+                            referenceImageToUpload.putFile(File(file!.path));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.only(bottom: 8),
+                            width: 200,
+                            padding: EdgeInsets.all(8.0),
+                            decoration: BoxDecoration(
+                              border: Border.all(color: Colors.black),
+                              borderRadius: BorderRadius.circular(15),
+                              color: const Color.fromARGB(255, 173, 157, 204),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Image.asset(
+                                  "assets/images/icons8-camera-64 (1).png",
+                                  height: 40,
+                                ),
+                                Text(
+                                  'Add Image',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ],
+                            ),
+                          ),
                         ),
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        if (imageUrl.isEmpty) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text('Please add image'),
-                          )
-                          );
-                        } else {
-                          if(_formkey.currentState!.validate()){
-                          _submitForm();
-                          }
-                        }
-                      },
-                      icon: Icon(Icons.keyboard_arrow_right_sharp),
-                      label: Text("Signup"),
+                        ElevatedButton.icon(
+                          onPressed: () async {
+                            if (imageUrl.isEmpty) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
+                                content: Text('Please add image'),
+                              ));
+                            }
+                            if (_formkey.currentState!.validate()) {
+                              _submitForm();
+                            }
+                          },
+                          icon: Icon(Icons.keyboard_arrow_right_sharp),
+                          label: Text("Signup"),
+                        ),
+                      ],
                     ),
-
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),),),
+      ),
     );
   }
 }
