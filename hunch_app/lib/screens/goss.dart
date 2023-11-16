@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hunch_app/chat/Chatpage.dart';
+import 'Home_screen.dart';
 
 class Goss extends StatefulWidget {
   const Goss({super.key});
@@ -45,7 +47,7 @@ class _GossState extends State<Goss> {
           Padding(
             padding: const EdgeInsets.fromLTRB(35, 0, 35, 0),
             child: Text(
-              'To chat with hunchkins viaGoss, you need to first start following each other. Start engaging in the comment to gain followers.',
+              'To chat with hunchkins via Goss, you need to first start following each other. Start engaging in the comment to gain followers.',
               style: TextStyle(
                 fontSize: 16,
               ),
@@ -56,7 +58,15 @@ class _GossState extends State<Goss> {
             height: 40,
           ),
           ElevatedButton(
-            onPressed: () {},
+            onPressed: () {
+              // HomeScreen().updateCurrentIndex(2);
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HomeScreen(inindex: 3),
+                ),
+              );
+            },
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(vertical: 20, horizontal: 80),
               primary: Colors.orange[200],
@@ -64,10 +74,11 @@ class _GossState extends State<Goss> {
               shadowColor: Colors.black,
               elevation: 10.0,
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                  side: BorderSide(color: Colors.black)),
+                borderRadius: BorderRadius.circular(8.0),
+                side: BorderSide(color: Colors.black),
+              ),
             ),
-            child: Text('Home'),
+            child: Text('Chat'),
           )
         ],
       ),

@@ -1,4 +1,4 @@
-//Gaurav Singh
+//Gaurav Singh, Ananya Singhal
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,51 @@ import 'package:hunch_app/chat/Chatpage.dart';
 import 'package:hunch_app/chat/chat_service.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:hunch_app/services/dbhelper.dart';
+import 'package:hunch_app/model/message.dart';
+
+class ChatService extends ChangeNotifier {
+  //notify listner when state change
+  final _auth = FirebaseAuth.instance;
+  final _store = FirebaseFirestore.instance;
+
+  void sendMessage(String Remail, String message) async {
+    final currentuserId = _auth.currentUser!.uid;
+    final currentUserEmail = _auth.currentUser!.email.toString();
+    final time = Timestamp.now();
+    Message newMessage = Message(
+        receiverId: Remail,
+        message: message,
+        senderEmail: currentUserEmail,
+        senderId: currentuserId,
+        timestamp: DateTime.timestamp(),
+        date: '',
+        imgUrl: '',
+        image: '');
+
+    List<String> ids = [currentuserId, Remail];
+    ids.sort();
+    String room = ids.join("-");
+    await _store
+        .collection('ChatRoom')
+        .doc(room)
+        .collection('Messages')
+        .add(newMessage.toMap());
+  }
+
+  Stream<QuerySnapshot> getMessages(String uid2, String uid1) {
+    List<String> ids = [uid1, uid2];
+    ids.sort();
+    String room = ids.join("-");
+    return _store
+        .collection('ChatRoom')
+        .doc(room)
+        .collection('Messages')
+        .orderBy('timestamp', descending: true)
+        // .orderBy('timestamp', descending: false)
+        .snapshots();
+  }
+}
 
 class Chatscreen extends StatefulWidget {
   const Chatscreen(
@@ -27,9 +72,45 @@ class _ChatscreenState extends State<Chatscreen> {
   String imageUrl = '';
   String? senderUrl;
 
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _messageController = TextEditingController();
+  List<Message> _messages = [];
+
+  @override
+  _loadMessages() async {
+    List<Message> messages = await DatabaseHelper.instance.getMessages();
+    setState(() {
+      _messages = messages;
+    });
+  }
+
+  _sendMessage() async {
+    String text = _messageController.text.trim();
+    String email = _emailController.text;
+    if (text.isNotEmpty) {
+      Message message = Message(
+        senderId: ' ',
+        senderEmail: email,
+        receiverId: ' ',
+        message: text,
+        timestamp: DateTime.now(),
+      );
+      await DatabaseHelper.instance.insertMessage(message);
+      _loadMessages();
+      _messageController.clear();
+      _emailController.clear();
+    }
+
+    if (_messageController.text.isNotEmpty) {
+      chatService.sendMessage(widget.Rid, _messageController.text.toString());
+    }
+    _messageController.clear();
+  }
+
   @override
   void initState() {
     super.initState();
+    _loadMessages();
     // Fetch the sender's image URL when the widget is initialized
     getImageUrlForUser().then((url) {
       if (url != null) {
@@ -64,15 +145,12 @@ class _ChatscreenState extends State<Chatscreen> {
     }
   }
 
-  final _messageController = TextEditingController();
   final chatService = ChatService();
   final auth = FirebaseAuth.instance;
-  void send() {
-    if (_messageController.text.isNotEmpty) {
-      chatService.sendMessage(widget.Rid, _messageController.text.toString());
-    }
-    _messageController.clear();
-  }
+
+  // void send() {
+
+  // }
 
   String formatTimestamp(Timestamp timestamp) {
     DateTime dateTime = timestamp.toDate();
@@ -338,7 +416,7 @@ class _ChatscreenState extends State<Chatscreen> {
           hoverColor: Colors.black,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(23)),
           suffixIcon: IconButton(
-            onPressed: () => send(),
+            onPressed: _sendMessage,
             icon: Icon(Icons.send_rounded),
           ),
         ),
