@@ -17,18 +17,17 @@ class PollList extends StatelessWidget {
 
         return Container(
           decoration: BoxDecoration(
+
            color: Colors.white,
             // color: const Color.fromARGB(255, 0, 0, 0),
             
-
-
           ),
           child: ListView.builder(
             itemCount: polls.length,
             itemBuilder: (context, index) {
               final pollData = polls[index].data() as Map<String, dynamic>;
               final optionsLength = pollData['options']?.length ?? 0;
-        
+              
               return ListTile(
                 title: Text(pollData['question'] , style: TextStyle(
                   color: Color.fromARGB(255, 192, 158, 232),
@@ -43,6 +42,7 @@ class PollList extends StatelessWidget {
                 
                 
                 ),),
+
                 onTap: () {
                   Navigator.push(
                     context,
@@ -137,8 +137,10 @@ class _CreatePollPageState extends State<CreatePollPage> {
                               'Please enter a question and at least one option.'),
                         ),
                       );
+
                       
                     //  print('Please enter a question and at least one option.');
+
                     }
                   },
                   bgColor: Colors.black,
@@ -155,7 +157,9 @@ class _CreatePollPageState extends State<CreatePollPage> {
   }
 
   bool validatePoll() {
+
     return questionController.text.isNotEmpty && options.length >= 2 ;
+
   }
 
   void createPoll() async {
@@ -266,14 +270,18 @@ class _PollDetailsState extends State<PollDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor: const  Color.fromARGB(255, 0, 0, 50),
         title: const Text('Poll Details' ),
+
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             const SizedBox(
+
               height : 20,
+
             ),
             Text(
               widget.pollData['question'],
@@ -303,6 +311,7 @@ class _PollDetailsState extends State<PollDetails> {
             //   child: const Text('Submit Vote'),
             // ),
             Padding(
+
               padding: const EdgeInsets.only(left: 60 , right: 60 , top : 10 , bottom: 10),
               child: Buttonxd(buttonName: 'Submit vote', onTap:() {
                   submitVote();
@@ -517,4 +526,5 @@ class Buttonxd extends StatelessWidget {
 //       Navigator.pop(context);
 //     }
 //   }
+
 // }
