@@ -13,6 +13,7 @@ import 'package:hunch_app/users.dart/userPage.dart';
 import 'package:hunch_app/users.dart/user_service.dart';
 import 'package:provider/provider.dart';
 import 'package:hunch_app/screens/notification.dart';
+import 'package:hunch_app/screens/goss.dart';
 
 // Define the MenuAction enum here
 enum MenuAction {
@@ -21,8 +22,8 @@ enum MenuAction {
 }
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
+  const HomeScreen({Key? key, this.inindex}) : super(key: key);
+  final int? inindex;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -30,10 +31,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
+  void initState() {
+    super.initState();
+    _currentIndex = widget.inindex ?? 0;
+  }
+
   final List<Widget> _screens = [
-    Container(
-      child: const CircularProgressIndicator(),
-    ),
+    Goss(),
     MyPoll(),
     AddPostScreen(),
     Chatpage(),
@@ -169,7 +173,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   Icon(
-                    Icons.search,
+                    Icons.poll_outlined,
                     color: Color.fromARGB(255, 255, 255, 255),
                   ),
                   Icon(

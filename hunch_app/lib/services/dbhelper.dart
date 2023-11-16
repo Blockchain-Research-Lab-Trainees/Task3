@@ -1,6 +1,6 @@
-//Ananya
+//Ananya Singhal
 
-//BASIC SQL Commands check
+// BASIC SQL Commands check
 // import 'dart:io';
 // import 'package:path_provider/path_provider.dart';
 // import 'package:sqflite/sqflite.dart';
