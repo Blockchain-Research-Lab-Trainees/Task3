@@ -5,7 +5,7 @@ class Message {
   final String senderEmail;
   final String receiverId;
   final String message;
-  final Timestamp timestamp;
+  final DateTime timestamp;
 
   Message({
     required this.senderId,
@@ -26,7 +26,7 @@ class Message {
       'senderEmail': senderEmail,
       'receiverId': receiverId,
       'message': message,
-      'timestamp': timestamp,
+      'Timestamp': timestamp.toString(),
     };
   }
 
@@ -36,7 +36,7 @@ class Message {
       senderEmail: map['senderEmail'],
       receiverId: map['receiverId'],
       message: map['message'],
-      timestamp: map['timestamp'],
+      timestamp: DateTime.parse(map['timestamp']),
     );
   }
 }
