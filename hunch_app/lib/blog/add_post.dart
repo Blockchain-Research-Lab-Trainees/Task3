@@ -1,5 +1,7 @@
-import 'dart:io';
+// Gaurav
 
+import 'dart:io';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
   final postRef = FirebaseDatabase.instance.reference().child('Posts');
   firebase_storage.FirebaseStorage storage = firebase_storage.FirebaseStorage.instance;
+  FirebaseAuth _auth = FirebaseAuth.instance;
 
   File? _image ;
   final picker = ImagePicker();
@@ -178,7 +181,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     
                       keyboardType: TextInputType.text ,
                       minLines: 1,
-                      maxLength: 5,
+                      maxLength: 25,
                       decoration: InputDecoration(
                         labelText: 'Description',
                         hintText: 'Enter post description',
@@ -204,7 +207,18 @@ class _AddPostScreenState extends State<AddPostScreen> {
                           await Future.value(uploadTask);
                           var newUrl = await ref.getDownloadURL();
 
+                          final User? user = _auth.currentUser ;
+
                           postRef.child('Post List').child(date.toString()).set({
+
+                            'pId': date.toString(),
+                            'pImage': newUrl.toString(),
+                            'pTime': date.toString(),
+                            'pTitle': titleController.text.toString(),
+                            'pDescription': descriptionController.text.toString(),
+                            'uEmail': user!.email.toString(),
+                            'uid': user!.uid.toString(),
+                            
 
                           }).then((value){
                             // toastMessage('Post Published');

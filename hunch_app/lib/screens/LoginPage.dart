@@ -247,7 +247,8 @@ class _LoginState extends State<Login> {
                                         ? Icon(
                                             Icons.remove_red_eye_rounded,
                                           )
-                                        : Icon(Icons.remove_red_eye_outlined))),
+                                        : Icon(Icons.remove_red_eye_outlined))
+                                        ),
                           ),
                           const SizedBox(
                             height: 10,
