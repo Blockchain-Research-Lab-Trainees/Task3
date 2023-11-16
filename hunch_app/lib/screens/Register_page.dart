@@ -235,12 +235,15 @@ class _SignUPState extends State<SignUP> {
           child: Padding(
             padding: const EdgeInsets.all(15.0),
             child: SingleChildScrollView(
-              child: Container(
+              child: Form(
+                  key: _formkey,
+                  child:Container(
                 child: Column(
                   children: <Widget>[
-                    Form(
-                        key: _formkey,
-                        child: Padding(
+                    // Form(
+                    //     key: _formkey,
+                    //     child:
+                        Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: <Widget>[
@@ -248,8 +251,7 @@ class _SignUPState extends State<SignUP> {
                                 controller: usernameController,
                                 decoration: InputDecoration(
                                   enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.deepPurpleAccent),
+                                    borderSide: BorderSide(color: Colors.deepPurpleAccent),
                                     borderRadius: BorderRadius.circular(15),
                                   ),
                                   focusedBorder: OutlineInputBorder(
@@ -265,6 +267,13 @@ class _SignUPState extends State<SignUP> {
                                   fillColor: Colors.grey[200],
                                   filled: true,
                                 ),
+                                  validator:(value){
+                                  if(value==null){
+                                    return "Username can't be empty";
+                                  }if(usernameController.text.trim()==''){
+                                    return"Enter valid Username";
+                                    }return null;
+                                }
                               ),
                               SizedBox(
                                 height: 15,
@@ -388,8 +397,8 @@ class _SignUPState extends State<SignUP> {
                                 height: 8,
                               ),
                             ],
-                          ),
-                        )),
+                          ),),
+
                     SizedBox(
                       height: 10,
                     ),
@@ -465,19 +474,22 @@ class _SignUPState extends State<SignUP> {
                           )
                           );
                         } else {
+                          if(_formkey.currentState!.validate()){
                           _submitForm();
+                          }
                         }
                       },
                       icon: Icon(Icons.keyboard_arrow_right_sharp),
                       label: Text("Signup"),
-                    )
+                    ),
+
                   ],
                 ),
               ),
             ),
           ),
         ),
-      )),
+      ),),),
     );
   }
 }

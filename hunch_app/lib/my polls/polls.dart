@@ -9,21 +9,21 @@ class MyPoll extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: const Color.fromARGB(207, 255, 255, 255),
-        //backgroundColor: Color.fromARGB(255, 0, 0, 0),
+
+         //backgroundColor: Color.fromARGB(255, 0, 0, 0),
         elevation: 0,
         //shadowColor: Colors.black,
-        title: const Text(
-          'ᴘᴏʟʟꜱ',
-          style: TextStyle(
-            color: const Color.fromARGB(255, 169, 146, 233),
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: const Text('ᴘᴏʟʟꜱ' , style: TextStyle(
+          color: const Color.fromARGB(255, 169, 146, 233),
+          fontSize: 32,
+          fontWeight: FontWeight.bold,
+        ),),
+        
       ),
       body: PollList(),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color.fromARGB(255, 169, 146, 233),
+        backgroundColor:const Color.fromARGB(255, 169, 146, 233),
+        
         onPressed: () {
           Navigator.push(
             context,
