@@ -83,7 +83,7 @@ class _MessageState extends State<Message> {
                                   builder: (context) => AddPostScreen()));
                         },
                         child: Image.asset(
-                          "assets/images/icon.jpeg",
+                          "assets/images/icon.png",
                           height: 60,
                         )),
                   ],
